@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 #include <gst/video/video.h>
-#include <gst/gl/gstglfuncs.h>
+#include <ext/qt/gstqtgl.h>
 #include "qtwindow.h"
 #include "gstqsgtexture.h"
 #include "gstqtglutility.h"
