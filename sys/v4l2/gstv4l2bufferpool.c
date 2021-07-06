@@ -3,7 +3,7 @@
  * Copyright (C) 2001-2002 Ronald Bultje <rbultje@ronald.bitfreak.net>
  *               2006 Edgard Lima <edgard.lima@gmail.com>
  *               2009 Texas Instruments, Inc - http://www.ti.com/
- * Copyright (C) 2020, Renesas Electronics Corporation
+ * Copyright (C) 2020,2021 Renesas Electronics Corporation
  *
  * gstv4l2bufferpool.c V4L2 buffer pool class
  *
@@ -735,21 +735,29 @@ gst_v4l2_buffer_pool_streamoff (GstV4l2BufferPool * pool)
       else                      /* Don't re-enqueue capture buffer on stop */
         pclass->release_buffer (bpool, buffer);
 
-#ifdef HAVE_MMNGRBUF
-      if (GST_IS_V4L2_MMNGR_BUFFER_POOL (pool)) {
-        GstV4l2MmngrBufferPool *mpool = GST_V4L2_MMNGR_BUFFER_POOL_CAST (pool);
-        GstBuffer *mmngr_buf =
-            g_array_index (mpool->mmngr_bufs, GstBuffer *, i);
-
-        /* free mmngr buffer */
-        mmngr_export_end_in_user_ext (g_array_index (mpool->mmngr_id, gint, i));
-        gst_buffer_unref (mmngr_buf);
-      }
-#endif
-
       g_atomic_int_add (&pool->num_queued, -1);
     }
   }
+
+#ifdef HAVE_MMNGRBUF
+  if (GST_IS_V4L2_MMNGR_BUFFER_POOL (pool)) {
+    gint dmabuf_id;
+    GstV4l2MmngrBufferPool *mpool = GST_V4L2_MMNGR_BUFFER_POOL_CAST (pool);
+
+    for (i = 0; i < mpool->mmngr_id->len; i++) {
+      /* free mmngr buffer */
+      dmabuf_id = g_array_index (mpool->mmngr_id, gint, i);
+      mmngr_export_end_in_user_ext (dmabuf_id);
+    }
+
+    for (i = 0; i < mpool->mmngr_bufs->len; i++) {
+      GstBuffer *mmngr_buf = g_array_index (mpool->mmngr_bufs, GstBuffer *, i);
+
+      if (mmngr_buf)
+        gst_buffer_unref (mmngr_buf);
+    }
+  }
+#endif
 }
 
 static gboolean
