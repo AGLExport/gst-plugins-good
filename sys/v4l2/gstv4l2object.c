@@ -2,7 +2,7 @@
  *
  * Copyright (C) 2001-2002 Ronald Bultje <rbultje@ronald.bitfreak.net>
  *               2006 Edgard Lima <edgard.lima@gmail.com>
- * Copyright (C) 2017-2018,2020 Renesas Electronics Corporation
+ * Copyright (C) 2017-2018,2020-2021 Renesas Electronics Corporation
  *
  * gstv4l2object.c: base class for V4L2 elements
  *
@@ -4396,6 +4396,16 @@ gst_v4l2_object_decide_allocation (GstV4l2Object * obj, GstQuery * query)
       gst_query_find_allocation_meta (query, GST_VIDEO_META_API_TYPE, NULL);
 
   can_share_own_pool = (has_video_meta || !obj->need_video_meta);
+
+#ifdef HAVE_MMNGRBUF
+  /* If use mmngrbufferpool, force share pool
+   * and accept copying data to downstream.
+   * This is fixing for issue work with filesink/fakesink which don't have
+   * video meta and v4l2 will decide to use generic pool.
+   * But v4l2src require to get buffer from mmngrpool in this case. */
+  if (GST_IS_V4L2_MMNGR_BUFFER_POOL (obj->pool))
+    can_share_own_pool = TRUE;
+#endif
 
   gst_v4l2_get_driver_min_buffers (obj);
   /* We can't share our own pool, if it exceed V4L2 capacity */

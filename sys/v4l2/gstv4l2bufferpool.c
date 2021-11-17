@@ -1836,6 +1836,11 @@ gst_v4l2_mmngr_buffer_pool_acquire_buffer (GstBufferPool * bpool,
   if (ret != GST_FLOW_OK)
     return ret;
 
+  /* If this is being called to resurrect a lost buffer */
+  if (params && params->flags & GST_V4L2_BUFFER_POOL_ACQUIRE_FLAG_RESURRECT) {
+    return ret;
+  }
+
   if (!gst_v4l2_is_buffer_valid (*buffer, &group))
     return GST_FLOW_ERROR;
 
