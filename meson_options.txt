@@ -64,8 +64,6 @@ option('osxaudio', type : 'feature', value : 'auto', description : 'macOS/iOS Co
 option('osxvideo', type : 'feature', value : 'auto', description : 'macOS Cocoa video sink plugin')
 option('png', type : 'feature', value : 'auto', description : 'PNG image codec plugin')
 option('pulse', type : 'feature', value : 'auto', description : 'Pulseaudio audio source/sink plugin')
-option('qt5', type : 'feature', value : 'auto', description : 'Qt5 QML video sink plugin')
-option('qt6', type : 'feature', value : 'auto', description : 'Qt6 QML video sink plugin')
 option('shout2', type : 'feature', value : 'auto', description : 'Shout-casting network sink plugin based on libshout2')
 option('soup', type : 'feature', value : 'auto', description : 'libsoup HTTP client source/sink plugin')
 option('speex', type : 'feature', value : 'auto', description : 'Speex audio codec plugin')
@@ -74,6 +72,15 @@ option('twolame', type : 'feature', value : 'auto', description : 'twolame mp2 a
 option('vpx', type : 'feature', value : 'auto', description : 'VP8 and VP9 video codec plugin')
 option('waveform', type : 'feature', value : 'auto', description : 'Windows waveform audio sink plugin')
 option('wavpack', type : 'feature', value : 'auto', description : 'Wavpack audio codec plugin')
+
+# Qt plugin options
+option('qt-method', type: 'combo', value: 'auto', choices: ['auto', 'pkg-config', 'qmake'],
+       description: 'Method to use to find Qt')
+option('qt-egl', type: 'feature', value: 'auto', description: 'EGLFS support in the Qt plugins')
+option('qt-wayland', type: 'feature', value: 'auto', description: 'Wayland support in the Qt plugins')
+option('qt-x11', type: 'feature', value: 'auto', description: 'Wayland support in the Qt plugins')
+option('qt5', type : 'feature', value : 'auto', description : 'Qt5 QML video sink plugin')
+option('qt6', type : 'feature', value : 'auto', description : 'Qt6 QML video sink plugin')
 
 # ximagesrc plugin options
 option('ximagesrc', type : 'feature', value : 'auto', description : 'X11 ximagesrc plugin')
