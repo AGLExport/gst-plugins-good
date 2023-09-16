@@ -89,20 +89,13 @@ if gst_gl_have_window_x11 and gst_gl_have_platform_glx
   endif
 endif
 
-#qt6_x11 = qt6_x11 \
-#    .require(gstglx11_dep.found(), error_message: 'gstreamer-gl-x11-1.0 is required') \
-#    .require(gst_gl_have_window_x11, error_message: 'x11 windowing support in gstreamer-gl is required') \
-#    .require(gst_gl_have_platform_glx, error_message: 'glx platform support in gstreamer-gl is required')
-#if qt6_x11.allowed()
-#  qt_defines += ['-DHAVE_QT_X11']
-#  have_qt_windowing = true
-#endif
-
 # EGL support
 if gst_gl_have_platform_egl
   # Embedded linux (e.g. i.MX6) with or without windowing support
-  qt_defines += ['-DHAVE_QT_EGLFS']
-  have_qt_windowing = true
+  #if qt6_egl.allowed()
+  #  qt_defines += ['-DHAVE_QT_EGLFS']
+  #  have_qt_windowing = true
+  #endif
   if have_qpa_include
     # Wayland windowing
     if gst_gl_have_window_wayland
@@ -115,32 +108,6 @@ if gst_gl_have_platform_egl
     endif
   endif
 endif
-
-#qt6_wayland = qt6_wayland \
-#    .require(gstglwayland_dep.found(), error_message: 'gstreamer-gl-wayland-1.0 is required') \
-#    .require(gst_gl_have_window_wayland, error_message: 'wayland windowing support in gstreamer-gl is required') \
-#    .require(gst_gl_have_platform_egl, error_message: 'egl platform support in gstreamer-gl is required') \
-#    .require(have_qpa_include, error_message: 'QPA platform native interface header is required')
-#if qt6_wayland.allowed()
-#  qt6waylandextras = dependency('qt6', modules : ['WaylandClient'], method: qt6_method, required: qt6_wayland)
-#  if qt6waylandextras.found()
-#    optional_deps += [qt6waylandextras, gstglwayland_dep]
-#    qt_defines += ['-DHAVE_QT_WAYLAND']
-#    have_qt_windowing = true
-#  endif
-#endif
-
-# EGL windowing for Embedded linux (e.g. i.MX6) with or without windowing
-# support
-#qt6_egl = qt6_egl \
-#    .require(host_system == 'linux') \
-#    .require(gstglegl_dep.found(), error_message: 'gstreamer-gl-egl-1.0 is required') \
-#    .require(gst_gl_have_platform_egl, error_message: 'egl platform support in gstreamer-gl is required')
-#if qt6_egl.allowed()
-#  qt_defines += ['-DHAVE_QT_EGLFS']
-#  optional_deps += gstglegl_dep
-#  have_qt_windowing = true
-#endif
 
 if qt6_option.require(have_qt_windowing).allowed()
   # Build it!
