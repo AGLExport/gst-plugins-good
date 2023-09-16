@@ -171,5 +171,4 @@ if qt6_option.require(have_qt_windowing).allowed()
     install: true,
     install_dir : plugins_install_dir)
   pkgconfig.generate(gstqml6gl, install_dir : plugins_pkgconfig_install_dir)
-  plugins += [gstqml6gl]
 endif
