@@ -22,6 +22,7 @@
 #include "config.h"
 #endif
 
+#include <gst/gst.h>
 
 static gboolean
 plugin_init (GstPlugin * plugin)
