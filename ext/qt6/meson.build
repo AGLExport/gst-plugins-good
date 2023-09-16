@@ -108,7 +108,7 @@ if gst_gl_have_platform_egl
     if gst_gl_have_window_wayland
       qt6waylandextras = dependency('qt6', modules : ['WaylandClient'], method: qt6_method, required: qt6_wayland)
       if qt6waylandextras.found()
-        optional_deps += [qt6waylandextras, gstglwayland_dep]
+        optional_deps += [qt6waylandextras]
         qt_defines += ['-DHAVE_QT_WAYLAND']
         have_qt_windowing = true
       endif
