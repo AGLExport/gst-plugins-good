@@ -27,12 +27,25 @@
 static gboolean
 plugin_init (GstPlugin * plugin)
 {
-  gboolean ret = FALSE;
+  if (!gst_element_register (plugin, "qml6glsink",
+          GST_RANK_NONE, GST_TYPE_QML6_GL_SINK)) {
+    return FALSE;
+  }
 
-  ret |= GST_ELEMENT_REGISTER (qml6glsink, plugin);
-  ret |= GST_ELEMENT_REGISTER (qml6glsrc, plugin);
-  ret |= GST_ELEMENT_REGISTER (qml6glmixer, plugin);
-  ret |= GST_ELEMENT_REGISTER (qml6gloverlay, plugin);
+  if (!gst_element_register (plugin, "qml6glsrc",
+          GST_RANK_NONE, GST_TYPE_QML6_GL_SRC)) {
+    return FALSE;
+  }
+
+  if (!gst_element_register (plugin, "qml6glmixer",
+          GST_RANK_NONE, GST_TYPE_QML6_GL_MIXER)) {
+    return FALSE;
+  }
+
+  if (!gst_element_register (plugin, "qml6gloverlay",
+          GST_RANK_NONE, GST_TYPE_QML6_GL_OVERLAY)) {
+    return FALSE;
+  }
 
   return ret;
 }
