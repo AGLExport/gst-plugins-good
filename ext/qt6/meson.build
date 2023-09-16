@@ -46,7 +46,7 @@ if not add_languages('cpp', native: false, required: qt6_option)
   subdir_done()
 endif
 
-qt6_mod = import('qt6')
+qt6_mod = import('qt5')
 if not qt6_mod.has_tools(method: qt6_method)
   if qt6_option.enabled()
     error('qt6 qmlglsink plugin is enabled, but qt specific tools were not found')
