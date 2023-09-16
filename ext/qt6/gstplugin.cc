@@ -23,6 +23,10 @@
 #endif
 
 #include <gst/gst.h>
+#include "gstqml6glsink.h"
+#include "gstqml6glsrc.h"
+#include "gstqml6glmixer.h"
+#include "gstqml6gloverlay.h"
 
 static gboolean
 plugin_init (GstPlugin * plugin)
