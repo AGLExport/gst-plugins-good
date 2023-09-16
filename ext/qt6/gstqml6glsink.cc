@@ -73,7 +73,6 @@
 #include "config.h"
 #endif
 
-#include "gstqt6elements.h"
 #include "gstqml6glsink.h"
 #include <QtGui/QGuiApplication>
 
@@ -139,8 +138,6 @@ G_DEFINE_TYPE_WITH_CODE (GstQml6GLSink, gst_qml6_gl_sink,
         "qtsink", 0, "Qt Video Sink");
     G_IMPLEMENT_INTERFACE (GST_TYPE_NAVIGATION,
         gst_qml6_gl_sink_navigation_interface_init));
-GST_ELEMENT_REGISTER_DEFINE_WITH_CODE (qml6glsink, "qml6glsink",
-    GST_RANK_NONE, GST_TYPE_QML6_GL_SINK, qt6_element_init (plugin));
 
 static void
 gst_qml6_gl_sink_class_init (GstQml6GLSinkClass * klass)

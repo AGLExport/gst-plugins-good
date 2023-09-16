@@ -29,7 +29,6 @@
 #include "config.h"
 #endif
 
-#include "gstqt6elements.h"
 #include "gstqml6glsrc.h"
 #include <QtGui/QGuiApplication>
 
@@ -81,8 +80,6 @@ enum
 G_DEFINE_TYPE_WITH_CODE (GstQml6GLSrc, gst_qml6_gl_src,
     GST_TYPE_PUSH_SRC, GST_DEBUG_CATEGORY_INIT (GST_CAT_DEFAULT,
         "qml6glsrc", 0, "Qt6 Qml Video Src"));
-GST_ELEMENT_REGISTER_DEFINE_WITH_CODE (qml6glsrc, "qml6glsrc",
-    GST_RANK_NONE, GST_TYPE_QML6_GL_SRC, qt6_element_init (plugin));
 
 static const gfloat vertical_flip_matrix[] = {
   1.0f, 0.0f, 0.0f, 0.0f,

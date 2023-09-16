@@ -1,6 +1,5 @@
 sources = [
   'gstplugin.cc',
-  'gstqt6element.cc',
   'gstqsg6material.cc',
   'gstqt6glutility.cc',
   'gstqml6glsink.cc',

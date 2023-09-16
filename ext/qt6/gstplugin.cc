@@ -22,7 +22,6 @@
 #include "config.h"
 #endif
 
-#include "gstqt6elements.h"
 
 static gboolean
 plugin_init (GstPlugin * plugin)

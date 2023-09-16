@@ -78,7 +78,6 @@
 #include "config.h"
 #endif
 
-#include "gstqt6elements.h"
 #include "gstqml6glmixer.h"
 #include "qt6glrenderer.h"
 #include "gstqt6glutility.h"

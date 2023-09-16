@@ -79,7 +79,6 @@
 #include "config.h"
 #endif
 
-#include "gstqt6elements.h"
 #include "gstqml6gloverlay.h"
 #include "qt6glrenderer.h"
 #include "gstqt6glutility.h"
@@ -161,8 +160,6 @@ static guint gst_qml6_gl_overlay_signals[LAST_SIGNAL] = { 0 };
 G_DEFINE_TYPE_WITH_CODE (GstQml6GLOverlay, gst_qml6_gl_overlay,
     GST_TYPE_GL_FILTER, GST_DEBUG_CATEGORY_INIT (GST_CAT_DEFAULT,
         "qml6gloverlay", 0, "Qt6 Video Overlay"));
-GST_ELEMENT_REGISTER_DEFINE_WITH_CODE (qml6gloverlay, "qml6gloverlay",
-    GST_RANK_NONE, GST_TYPE_QML6_GL_OVERLAY, qt6_element_init (plugin));
 
 static void
 gst_qml6_gl_overlay_class_init (GstQml6GLOverlayClass * klass)
