@@ -23,28 +23,16 @@
 #endif
 
 #include "gstqt6elements.h"
+#include "qt6glitem.h"
+#include <QtQml/QQmlApplicationEngine>
 
-static gboolean
-plugin_init (GstPlugin * plugin)
+void
+qt6_element_init (GstPlugin * plugin)
 {
-  gboolean ret = FALSE;
-
-  ret |= GST_ELEMENT_REGISTER (qml6glsink, plugin);
-
-  return ret;
+  static gsize res = FALSE;
+  if (g_once_init_enter (&res)) {
+    /* this means the plugin must be loaded before the qml engine is loaded */
+    qmlRegisterType<Qt6GLVideoItem> ("org.freedesktop.gstreamer.Qt6GLVideoItem", 1, 0, "GstGLQt6VideoItem");
+    g_once_init_leave (&res, TRUE);
+  }
 }
-
-#ifndef GST_PACKAGE_NAME
-#define GST_PACKAGE_NAME   "GStreamer Bad Plug-ins (qmake)"
-#define GST_PACKAGE_ORIGIN "Unknown package origin"
-#define GST_LICENSE        "LGPL"
-#define PACKAGE            "gst-plugins-bad (qmake)"
-#define PACKAGE_VERSION    "1.21.0.1"
-#endif
-
-GST_PLUGIN_DEFINE (GST_VERSION_MAJOR,
-    GST_VERSION_MINOR,
-    qml6,
-    "Qt6 Qml plugin",
-    plugin_init, PACKAGE_VERSION, GST_LICENSE, GST_PACKAGE_NAME,
-    GST_PACKAGE_ORIGIN)

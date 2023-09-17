@@ -22,14 +22,34 @@
 #include "config.h"
 #endif
 
-#include "gstqt6elements.h"
+#include <gst/gst.h>
+#include "gstqml6glsink.h"
+#include "gstqml6glsrc.h"
+#include "gstqml6glmixer.h"
+#include "gstqml6gloverlay.h"
 
 static gboolean
 plugin_init (GstPlugin * plugin)
 {
-  gboolean ret = FALSE;
+  if (!gst_element_register (plugin, "qml6glsink",
+          GST_RANK_NONE, GST_TYPE_QML6_GL_SINK)) {
+    return FALSE;
+  }
 
-  ret |= GST_ELEMENT_REGISTER (qml6glsink, plugin);
+  if (!gst_element_register (plugin, "qml6glsrc",
+          GST_RANK_NONE, GST_TYPE_QML6_GL_SRC)) {
+    return FALSE;
+  }
+
+  if (!gst_element_register (plugin, "qml6glmixer",
+          GST_RANK_NONE, GST_TYPE_QML6_GL_MIXER)) {
+    return FALSE;
+  }
+
+  if (!gst_element_register (plugin, "qml6gloverlay",
+          GST_RANK_NONE, GST_TYPE_QML6_GL_OVERLAY)) {
+    return FALSE;
+  }
 
   return ret;
 }

@@ -1,6 +1,6 @@
 /*
  * GStreamer
- * Copyright (C) 2016 Freescale Semiconductor, Inc. All rights reserved.
+ * Copyright (C) 2022 Matthew Waters <matthew@centricular.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -18,38 +18,41 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef __QML6_GL_UTILS_H__
-#define __QML6_GL_UTILS_H__
+#pragma once
 
 #include <gst/gst.h>
 #include <gst/gl/gl.h>
 
-#include <QVariant>
-#include <QRunnable>
+#include "gstqt6gl.h"
+#include <QtQuick/QQuickItem>
+#include <QtQuick/QSGTexture>
+#include <QtQuick/QSGTextureProvider>
+#include <QtQuick/QSGSimpleTextureNode>
+#include <QtGui/QOpenGLFunctions>
 
-G_BEGIN_DECLS
+class GstQSG6OpenGLNode : public QSGTextureProvider, public QSGSimpleTextureNode, protected QOpenGLFunctions
+{
+  Q_OBJECT
 
-struct RenderJob : public QRunnable {
-    using Callable = std::function<void()>;
+public:
+  GstQSG6OpenGLNode(QQuickItem *item);
+  ~GstQSG6OpenGLNode();
 
-    explicit RenderJob(Callable c) : _c(c) { }
+  QSGTexture *texture() const override;
 
-    void run() { _c(); }
+  void setCaps(GstCaps *caps);
+  void setBuffer(GstBuffer *buffer);
+  GstBuffer *getBuffer();
+
+  void updateQSGTexture();
 
 private:
-    Callable _c;
+  QQuickWindow *window_;
+  GstBuffer * buffer_;
+  gboolean buffer_was_bound;
+  GstBuffer * sync_buffer_;
+  GstMemory * mem_;
+  QSGTexture *dummy_tex_;
+  GstVideoInfo v_info;
+  GstVideoFrame v_frame;
 };
-
-GstGLDisplay * gst_qml6_get_gl_display (gboolean sink);
-gboolean       gst_qml6_get_gl_wrapcontext (GstGLDisplay * display,
-    GstGLContext **wrap_glcontext, GstGLContext **context);
-
-G_END_DECLS
-
-#if 0
-#if defined(__cplusplus)
-QVariant       qt_opengl_native_context_from_gst_gl_context     (GstGLContext * context);
-#endif
-#endif
-
-#endif /* __QML6_GL_UTILS_H__ */

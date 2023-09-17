@@ -27,6 +27,9 @@ G_BEGIN_DECLS
 void qt6_element_init (GstPlugin * plugin);
 
 GST_ELEMENT_REGISTER_DECLARE (qml6glsink);
+GST_ELEMENT_REGISTER_DECLARE (qml6glsrc);
+GST_ELEMENT_REGISTER_DECLARE (qml6glmixer);
+GST_ELEMENT_REGISTER_DECLARE (qml6gloverlay);
 
 G_END_DECLS
 
