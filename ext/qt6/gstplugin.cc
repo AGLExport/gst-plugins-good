@@ -22,16 +22,21 @@
 #include "config.h"
 #endif
 
-#include "gstqt6elements.h"
+#include <gst/gst.h>
+#include "gstqml6glsink.h"
 
 static gboolean
 plugin_init (GstPlugin * plugin)
 {
-  gboolean ret = FALSE;
+  if (!gst_element_register (plugin, "qml6glsink",
+          GST_RANK_NONE, GST_TYPE_QML6_GL_SINK)) {
+    return FALSE;
+  }
 
-  ret |= GST_ELEMENT_REGISTER (qml6glsink, plugin);
+  /* this means the plugin must be loaded before the qml engine is loaded */
+  qmlRegisterType<Qt6GLVideoItem> ("org.freedesktop.gstreamer.Qt6GLVideoItem", 1, 0, "GstGLQt6VideoItem");
 
-  return ret;
+  return TRUE;
 }
 
 #ifndef GST_PACKAGE_NAME
