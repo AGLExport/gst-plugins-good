@@ -100,13 +100,13 @@ private Q_SLOTS:
 protected:
     QSGNode * updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData * updatePaintNodeData) override;
     void releaseResources() override;
-    void wheelEvent(QWheelEvent *) override;
-    void hoverEnterEvent(QHoverEvent *) override;
-    void hoverLeaveEvent (QHoverEvent *) override;
-    void hoverMoveEvent (QHoverEvent *) override;
-    void mousePressEvent(QMouseEvent*) override;
-    void mouseReleaseEvent(QMouseEvent*) override;
-    void touchEvent(QTouchEvent*) override;
+    //void wheelEvent(QWheelEvent *) override;
+    //void hoverEnterEvent(QHoverEvent *) override;
+    //void hoverLeaveEvent (QHoverEvent *) override;
+    //void hoverMoveEvent (QHoverEvent *) override;
+    //void mousePressEvent(QMouseEvent*) override;
+    //void mouseReleaseEvent(QMouseEvent*) override;
+    //void touchEvent(QTouchEvent*) override;
 
 private:
 
@@ -116,10 +116,10 @@ private:
     void fitStreamToAllocatedSize(GstVideoRectangle * result);
     QPointF mapPointToStreamSize(QPointF);
 
-    void sendMouseEvent(QMouseEvent * event, gboolean is_press);
+    //void sendMouseEvent(QMouseEvent * event, gboolean is_press);
 
-    quint32 mousePressedButton;
-    bool mouseHovering;
+    //quint32 mousePressedButton;
+    //bool mouseHovering;
 
     QSharedPointer<Qt6GLVideoItemInterface> proxy;
 };

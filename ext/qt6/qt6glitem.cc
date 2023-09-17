@@ -415,7 +415,7 @@ Qt6GLVideoItem::mapPointToStreamSize(QPointF pos)
 
   return QPointF(stream_x, stream_y);
 }
-
+#if 0
 static GstNavigationModifierType
 translateModifiers(Qt::KeyboardModifiers modifiers)
 {
@@ -436,7 +436,6 @@ translateMouseButtons(Qt::MouseButtons buttons)
     ((buttons & Qt::BackButton) ? GST_NAVIGATION_MODIFIER_BUTTON4_MASK : 0) |
     ((buttons & Qt::ForwardButton) ? GST_NAVIGATION_MODIFIER_BUTTON5_MASK : 0));
 }
-
 void
 Qt6GLVideoItem::wheelEvent(QWheelEvent * event)
 {
@@ -615,7 +614,7 @@ Qt6GLVideoItem::mouseReleaseEvent(QMouseEvent * event)
 {
   sendMouseEvent(event, FALSE);
 }
-
+#endif
 void
 Qt6GLVideoItemInterface::setSink (GstElement * sink)
 {
