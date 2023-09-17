@@ -72,7 +72,6 @@
 #include "config.h"
 #endif
 
-#include "gstqt6elements.h"
 #include "gstqml6glsink.h"
 #include <QtGui/QGuiApplication>
 
@@ -135,11 +134,7 @@ enum
 #define gst_qml6_gl_sink_parent_class parent_class
 G_DEFINE_TYPE_WITH_CODE (GstQml6GLSink, gst_qml6_gl_sink,
     GST_TYPE_VIDEO_SINK, GST_DEBUG_CATEGORY_INIT (GST_CAT_DEFAULT,
-        "qtsink", 0, "Qt Video Sink");
-    G_IMPLEMENT_INTERFACE (GST_TYPE_NAVIGATION,
-        gst_qml6_gl_sink_navigation_interface_init));
-GST_ELEMENT_REGISTER_DEFINE_WITH_CODE (qml6glsink, "qml6glsink",
-    GST_RANK_NONE, GST_TYPE_QML6_GL_SINK, qt6_element_init (plugin));
+        "qtsink", 0, "Qt Video Sink"));
 
 static void
 gst_qml6_gl_sink_class_init (GstQml6GLSinkClass * klass)
@@ -550,33 +545,4 @@ config_failed:
     GST_DEBUG_OBJECT (bsink, "failed setting config");
     return FALSE;
   }
-}
-
-static void
-gst_qml6_gl_sink_navigation_send_event (GstNavigation * navigation,
-                                   GstEvent * event)
-{
-  GstQml6GLSink *qt_sink = GST_QML6_GL_SINK (navigation);
-  GstPad *pad;
-
-  pad = gst_pad_get_peer (GST_VIDEO_SINK_PAD (qt_sink));
-
-  GST_TRACE_OBJECT (qt_sink, "navigation event %" GST_PTR_FORMAT,
-      gst_event_get_structure(event));
-
-  if (GST_IS_PAD (pad) && GST_IS_EVENT (event)) {
-    if (!gst_pad_send_event (pad, gst_event_ref (event))) {
-      /* If upstream didn't handle the event we'll post a message with it
-       * for the application in case it wants to do something with it */
-      gst_element_post_message (GST_ELEMENT_CAST (qt_sink),
-                                gst_navigation_message_new_event (GST_OBJECT_CAST (qt_sink), event));
-    }
-    gst_event_unref (event);
-    gst_object_unref (pad);
-  }
-}
-
-static void gst_qml6_gl_sink_navigation_interface_init (GstNavigationInterface * iface)
-{
-  iface->send_event_simple = gst_qml6_gl_sink_navigation_send_event;
 }
